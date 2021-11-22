@@ -29,12 +29,32 @@ async function test_002_dic () {
 
 }
 
+async function test_003_str () {
+
+	const garXmlZip = new GarXmlZip (path)
+
+	const houses = await garXmlZip.createReadStream ({
+		name: 'HOUSES',
+	  region:  1,
+	  filter: r => r.get ('HOUSENUM') === '1',
+		 map: r => {r.set ('foo', 'bar'); return r},
+		join: ['OBJECTGUID', 'ADDRESS'],
+	})
+	
+	for await (const house of houses) {
+		console.log ({house})
+		return
+	}
+
+}
+
 async function main () {
 
 	if (!fs.existsSync (path)) return console.log ('No file, no problem')
 	
-	await test_001_date ()
-	await test_002_dic ()
+//	await test_001_date ()
+//	await test_002_dic ()
+	await test_003_str ()
 
 }
 
