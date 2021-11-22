@@ -14,11 +14,27 @@ async function test_001_date () {
 
 }
 
+async function test_002_dic () {
+
+	const garXmlZip = new GarXmlZip (path)
+
+	const d = await garXmlZip.getDataDictionary ({
+		name   : 'HOUSE_TYPES',
+		filter : r => r.get ('ISACTIVE') === 'true',
+		map    : r => r.get ('SHORTNAME')
+	})
+
+	assert (!d.has ('1'))
+	assert.strictEqual (d.get ('2'), 'д.')
+
+}
+
 async function main () {
 
 	if (!fs.existsSync (path)) return console.log ('No file, no problem')
 	
 	await test_001_date ()
+	await test_002_dic ()
 
 }
 

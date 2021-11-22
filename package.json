@@ -12,9 +12,7 @@
   },
   "keywords": [
     "fias",
-    "gar",
-    "����",
-    "���"
+    "gar"
   ],
   "author": "Dmitry Ovsyanko",
   "license": "MIT",
@@ -23,6 +21,7 @@
   },
   "homepage": "https://github.com/do-/node-ru-nalog-fias-gar#readme",
   "dependencies": {
-    "unzippo": "^1.0.2"
+    "unzippo": "^1.0.2",
+    "xml-toolkit": "0.0.1"
   }
 }
