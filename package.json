@@ -1,0 +1,28 @@
+{
+  "name": "ru-nalog-fias-gar",
+  "version": "1.0.0",
+  "description": "Tools for reading gar_xml.zip from fias.nalog.ru",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/do-/node-ru-nalog-fias-gar.git"
+  },
+  "keywords": [
+    "fias",
+    "gar",
+    "����",
+    "���"
+  ],
+  "author": "Dmitry Ovsyanko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/do-/node-ru-nalog-fias-gar/issues"
+  },
+  "homepage": "https://github.com/do-/node-ru-nalog-fias-gar#readme",
+  "dependencies": {
+    "unzippo": "^1.0.2"
+  }
+}
