@@ -1,2 +1,7 @@
-# node-ru-nalog-fias-gar
-Tools for reading gar_xml.zip from fias.nalog.ru
+# Disclaimer
+
+This software is developed solely for integration with Russian government IT systems, so the Cyrillic script is widely used in its documentation.
+
+# Предупреждение
+
+Ведутся работы. Код ещё не написан.
