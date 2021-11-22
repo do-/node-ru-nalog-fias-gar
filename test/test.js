@@ -36,10 +36,12 @@ async function test_003_str () {
 	const houses = await garXmlZip.createReadStream ({
 		name: 'HOUSES',
 	  region:  1,
-	  filter: r => r.get ('HOUSENUM') === '1',
+//	  filter: r => r.get ('HOUSENUM') === '1',
 		 map: r => {r.set ('foo', 'bar'); return r},
-		join: ['OBJECTGUID', 'ADDRESS'],
+		join: ['OBJECTGUID', 'HOUSENUM'],
 	})
+
+//	houses.pipe (fs.createWriteStream ('h.txt'))
 	
 	for await (const house of houses) {
 		console.log ({house})
