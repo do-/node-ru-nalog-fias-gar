@@ -1,6 +1,6 @@
 {
   "name": "ru-nalog-fias-gar",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Tools for reading gar_xml.zip from fias.nalog.ru",
   "main": "index.js",
   "scripts": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/do-/node-ru-nalog-fias-gar#readme",
   "dependencies": {
+    "progress-stream": "^2.0.0",
     "unzippo": "^1.0.2",
     "xml-toolkit": "0.0.1"
   }

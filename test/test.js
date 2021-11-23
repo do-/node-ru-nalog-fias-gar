@@ -32,22 +32,29 @@ async function test_002_dic () {
 async function test_003_str () {
 
 	const garXmlZip = new GarXmlZip (path)
+	
+	let cnt = 0
 
 	const houses = await garXmlZip.createReadStream ({
 		name: 'HOUSES',
-	  region:  1,
+	  region:  78,
 //	  filter: r => r.get ('HOUSENUM') === '1',
-		 map: r => {r.set ('foo', 'bar'); return r},
-		join: ['OBJECTGUID', 'HOUSENUM'],
-	})
+		 map: r => {r.set ('foo', ++cnt); return r},
+		join: ['foo', 'OBJECTGUID', 'HOUSENUM'],
+		progress: [  
+			p => console.log (p.percentage + '%'),
+			{time: 2000},
+		],
+     })
 
-//	houses.pipe (fs.createWriteStream ('h.txt'))
-	
+	houses.pipe (fs.createWriteStream ('h.txt'))
+
+/*	
 	for await (const house of houses) {
 		console.log ({house})
 		return
 	}
-
+*/
 }
 
 async function main () {
