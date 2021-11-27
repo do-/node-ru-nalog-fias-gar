@@ -1,6 +1,6 @@
 {
   "name": "ru-nalog-fias-gar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Tools for reading gar_xml.zip from fias.nalog.ru",
   "main": "index.js",
   "scripts": {

@@ -8,11 +8,13 @@ This software is developed solely for integration with Russian government IT sys
 
 Чтение происходит непосредственно из ZIP-архива, не требуя предварительной распаковки в файловую систему.
 
-Извлечение таблиц, содержащих миллионы записей (дома, улицы и т. п.) реализовано в виде [потока](https://nodejs.org/docs/latest/api/stream.html#readable-streams) [объектов](https://nodejs.org/docs/latest/api/stream.html#object-mode).
+Извлечение списков, содержащих многие сотни тысяч записей (дома, улицы и т. п.) реализовано в виде [потока](https://nodejs.org/docs/latest/api/stream.html#readable-streams) [объектов](https://nodejs.org/docs/latest/api/stream.html#object-mode).
 
-Отдельные записи, извлечённые из XML, представляются в виде объектов типа [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map). Все ключи и все значения в этих Map (в том числе такие, как `"1"`, `"true"`, `"2079-06-06"`) являются примитивными строками, непосредственно вырезанными из XML-текста, без дополнительных преобразований.
+Отдельные записи представляются в виде объектов типа [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map). Все ключи и все значения в этих Map (в том числе такие, как `"1"`, `"true"`, `"2079-06-06"`) являются примитивными строками, непосредственно вырезанными из XML-текста, без дополнительных преобразований.
 
-Предусмотрена опция для преобразования этих объектов в строки с разделителями-символами табуляции - для массовой загрузки в БД.
+Предусмотрена опция преобразования этих записей в строки с разделителями-символами табуляции - для массовой загрузки в БД.
+
+Для отслеживания обработанного объёма данных в реальном времени подключён модуль [`progress-stream`](https://www.npmjs.com/package/progress-stream).
 
 # Установка
 ```shell
@@ -42,6 +44,10 @@ const houses = await garXmlZip.createReadStream ({
   filter: r => r.get ('ISACTUAL') === '1',
      map: r => {r.set ('ADDRESS', ...) ...; return r},
     join: ['OBJECTGUID', 'ADDRESS'],
+progress: [  
+             p => console.log (p.percentage + '%'),
+             {time: 2000},
+          ],
 })
 
   // ...и дальше
@@ -72,7 +78,7 @@ const garXmlZip = new GarXmlZip ('~/gar_xml.zip')
 |-|-|-|
 |path|string|Путь к файлу `gar_xml.zip`||
 
-Сам по себе конструктор не производит никаких действий с файлом, в том числе не проверяет его наличие. Однако при вызове всех методов файл должен быть доступен на чтение по указанному пути.
+Сам по себе конструктор не производит никаких действий с файлом, в том числе не проверяет его доступность. Однако при вызове всех методов файл должен быть доступен на чтение по указанному пути.
 
 ## `getDate`
 ```js
@@ -116,6 +122,12 @@ const houses = await garXmlZip.createReadStream ({
   filter: r => r.get ('ISACTUAL') === '1',
      map: r => {r.set ('ADDRESS', ...) ...; return r},
     join: ['OBJECTGUID', 'ADDRESS'],
+progress: [  
+             p => console.log (p.percentage + '%'),
+             {time: 2000},
+          ],
+
+
 })
 ```
 Асинхронный метод, извлекающий содержимое одного из файлов в региональной директории в виде потока.
@@ -130,3 +142,4 @@ const houses = await garXmlZip.createReadStream ({
 |filter|Map => Boolean|Нет|r => true|Если эта функция определена, она вызывается для каждой записи и в результат попадают только те из них, для которых функция вернёт значение, [приводимое](https://262.ecma-international.org/12.0/#sec-toboolean) к `true`|
 |map|Map => any|Нет|r => r|Если эта функция определена, то каждая исходная запись заменяется на результат её вызова|
 |join|Array|Нет||Если этот массив определён, то каждая запись (после `map`) заменяется на строку, составленную из значений перечисленных в `join` полей, через `\t`, оканчивающуюся на `\n`|
+|progress|Array[2]|Нет||Если этот массив определён, то для входящего потока создаётся счётчик прочитанных байт из модуля [`progress-stream`](https://www.npmjs.com/package/progress-stream), при этом первый элемент массива - функция, устанавливаемая `on ('progress')`, а второй - набор [опций](https://www.npmjs.com/package/progress-stream#options) объекта-счётчика|
