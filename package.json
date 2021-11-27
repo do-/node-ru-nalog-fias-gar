@@ -23,6 +23,6 @@
   "dependencies": {
     "progress-stream": "^2.0.0",
     "unzippo": "^1.0.2",
-    "xml-toolkit": "0.0.1"
+    "xml-toolkit": "0.0.3"
   }
 }
