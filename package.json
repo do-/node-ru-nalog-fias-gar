@@ -1,10 +1,33 @@
 {
   "name": "ru-nalog-fias-gar",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Tools for reading gar_xml.zip from fias.nalog.ru",
   "main": "index.js",
+  "files": [
+    "/lib",
+    "/badges"
+  ],
   "scripts": {
-    "test": "node test/test.js"
+    "test": "jest",
+    "test-ci": "jest --ci --coverage"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "lib/**/*.js"
+    ],
+    "coverageReporters": [
+      "clover",
+      "json",
+      "lcov",
+      "text",
+      "json-summary"
+    ],
+    "verbose": false,
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__/data",
+      "/__tests__/lib"
+    ]
   },
   "repository": {
     "type": "git",
@@ -20,6 +43,9 @@
     "url": "https://github.com/do-/node-ru-nalog-fias-gar/issues"
   },
   "homepage": "https://github.com/do-/node-ru-nalog-fias-gar#readme",
+  "devDependencies": {
+    "jest": "^29.3.1"
+  },
   "dependencies": {
     "progress-stream": "^2.0.0",
     "unzippo": "^1.0.2",
