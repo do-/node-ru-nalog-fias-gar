@@ -1,3 +1,6 @@
+![workflow](https://github.com/do-/node-ru-nalog-fias-gar/actions/workflows/main.yml/badge.svg)
+![Jest coverage](./badges/coverage-jest%20coverage.svg)
+
 # Disclaimer
 
 This software is developed solely for integration with Russian government IT systems, so the Cyrillic script is widely used in its documentation.
