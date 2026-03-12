@@ -13,8 +13,8 @@ test ('basic', async () => {
 
 test ('bad', async () => {
 
-	const garXmlZip = new GarXmlZip (Path.join (__dirname, '1.zip'))
+	const garXmlZip = new GarXmlZip (Path.join (__dirname, 'no_version.zip'))
 
-	await expect (() => garXmlZip.getDate ()).rejects.toBeDefined ()
+	await expect (() => garXmlZip.getDate ()).rejects.toThrow ('No .XML file found')
 
 })

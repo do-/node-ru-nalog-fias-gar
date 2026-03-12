@@ -11,10 +11,26 @@ test ('basic', async () => {
 
 })
 
-test ('bad', async () => {
+test ('missing', async () => {
 
-	const garXmlZip = new GarXmlZip (Path.join (__dirname, '1.zip'))
+	const garXmlZip = new GarXmlZip (Path.join (__dirname, 'no_version.zip'))
 
-	await expect (() => garXmlZip.getVersion ()).rejects.toBeDefined ()
+	await expect (() => garXmlZip.getVersion ()).rejects.toThrow ('not found')
+
+})
+
+test ('empty', async () => {
+
+	const garXmlZip = new GarXmlZip (Path.join (__dirname, 'empty.zip'))
+
+	await expect (() => garXmlZip.getVersion ()).rejects.toThrow ('too small')
+
+})
+
+test ('large', async () => {
+
+	const garXmlZip = new GarXmlZip (Path.join (__dirname, 'large.zip'))
+
+	await expect (() => garXmlZip.getVersion ()).rejects.toThrow ('too large')
 
 })
